@@ -1,125 +1,137 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+"use client"
 
-const ease = [0.25, 1, 0.5, 1]; // extremely natural
+import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
 
-const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.6,
+export default function Hero() {
+  const [isHovered, setIsHovered] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // Ensures the browser is ready to capture the ultra-slow silk glide
+    const timer = setTimeout(() => setMounted(true), 150)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // THE SILK FORMULA: 
+  // 2.5s duration for a heavy feel, 150px downside start for travel distance.
+  const silkVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 150, 
+      filter: "blur(15px)" 
     },
-  },
-};
-
-const fadeItem = {
-  hidden: {
-    opacity: 0,
-  },
-  show: {
-    opacity: 1,
-    transition: {
-      duration: 2.4,
-      ease,
-    },
-  },
-};
-
-const buttonFade = {
-  hidden: {
-    opacity: 0,
-  },
-  show: {
-    opacity: 1,
-    transition: {
-      duration: 2.0,
-      ease,
-    },
-  },
-};
-
-const Hero = () => {
-  const [isHovered, setIsHovered] = useState(false);
+    visible: (delay: number) => ({
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 2.5,           
+        ease: [0.16, 1, 0.3, 1], 
+        delay: delay
+      },
+    })
+  }
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-[#0B0F14]">
-
-      {/* Background Backlight */}
-      <div
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-        w-[600px] h-[600px] bg-[#94A3B8] rounded-full blur-[160px] 
-        transition-opacity duration-[2500ms] pointer-events-none z-0 
-        ${isHovered ? 'opacity-20' : 'opacity-5'}`}
+    <section 
+      style={{ backgroundColor: '#0D1117' }} 
+      className="relative w-full h-screen overflow-hidden flex flex-col justify-center items-start"
+    >
+      {/* 🔵 INTERACTIVE BACKGROUND GLOW */}
+      {/* Intensifies from 0.1 to 0.2 opacity on button hover */}
+      <motion.div 
+        animate={{ 
+          opacity: isHovered ? 0.2 : 0.1,
+          scale: isHovered ? 1.1 : 1 
+        }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        style={{ backgroundColor: '#2F81F7' }}
+        className="absolute -left-20 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[180px] pointer-events-none z-0" 
       />
 
-      <motion.div
-        className="container mx-auto px-6 relative z-10 text-center"
-        variants={container}
-        initial="hidden"
-        animate="show"
-      >
+      {/* Professional Grid Overlay (#30363D) */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.1]" 
+        style={{ 
+          backgroundImage: `linear-gradient(#30363D 1px, transparent 1px), linear-gradient(90deg, #30363D 1px, transparent 1px)`,
+          backgroundSize: '60px 60px' 
+        }}
+      />
 
-        {/* LINE 1 */}
-        <motion.h1
-          variants={fadeItem}
-          className="text-5xl lg:text-7xl font-bold tracking-tight text-[#E5E7EB] mb-2"
-        >
-          Cloud-Native CI/CD Platform
-        </motion.h1>
-
-        {/* LINE 2 */}
-        <motion.h1
-          variants={fadeItem}
-          className="text-5xl lg:text-7xl font-bold tracking-tight text-[#94A3B8] mb-6"
-        >
-          for Modern DevOps Teams
-        </motion.h1>
-
-        {/* DESCRIPTION */}
-        <motion.p
-          variants={fadeItem}
-          className="max-w-2xl mx-auto text-lg text-[#9CA3AF] mb-10 leading-relaxed"
-        >
-          Deploy with confidence using Kubernetes-native pipelines. Automated
-          builds, real-time logs, and seamless integrations — all powered by
-          Tekton and Argo Workflows.
-        </motion.p>
-
-        {/* BUTTONS */}
-        <motion.div
-          variants={container}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.button
-            variants={buttonFade}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="w-full sm:w-auto px-8 py-4 bg-[#94A3B8] hover:bg-[#CBD5E1]
-            text-[#0B0F14] rounded-xl font-bold transition-all duration-300
-            shadow-lg shadow-white/5 transform hover:-translate-y-1"
+      <div className="container mx-auto px-12 md:px-24 lg:px-32 relative z-10">
+        
+        {/* WAVE 1: THE FIRST LINE - Primary Text #E6EDF3 */}
+        <div className="overflow-hidden mb-1">
+          <motion.h1
+            custom={0.2}
+            variants={silkVariants}
+            initial="hidden"
+            animate={mounted ? "visible" : "hidden"}
+            style={{ color: '#E6EDF3' }}
+            className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight"
           >
-            Get Started Free →
-          </motion.button>
+            Cloud-Native CI/CD Platform
+          </motion.h1>
+        </div>
 
-          <motion.button
-            variants={buttonFade}
-            className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold
-            text-[#E5E7EB] transition-all duration-300 transform hover:-translate-y-1"
-            style={{
-              background: 'rgba(22, 27, 34, 0.65)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.45)',
-            }}
+        {/* WAVE 2: THE SECOND LINE - Muted Title #9CA3AF */}
+        <div className="overflow-hidden mb-8">
+          <motion.h1
+            custom={0.8}
+            variants={silkVariants}
+            initial="hidden"
+            animate={mounted ? "visible" : "hidden"}
+            style={{ color: '#9CA3AF' }}
+            className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight"
           >
-            View Architecture
-          </motion.button>
-        </motion.div>
+            for Modern DevOps Teams
+          </motion.h1>
+        </div>
 
-      </motion.div>
+        {/* WAVE 3: THE DESCRIPTION - Muted Text #6B7280 */}
+        <div className="overflow-hidden mb-12 max-w-xl text-left">
+          <motion.p
+            custom={1.4}
+            variants={silkVariants}
+            initial="hidden"
+            animate={mounted ? "visible" : "hidden"}
+            style={{ color: '#6B7280' }}
+            className="text-lg md:text-xl leading-relaxed font-light"
+          >
+            Automate your infrastructure with Kubernetes-native pipelines. 
+            Deploy with confidence using real-time logs and seamless integrations.
+          </motion.p>
+        </div>
+
+        {/* WAVE 4: THE INTERACTIVE BUTTON */}
+        {mounted && (
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, delay: 2.2 }}
+          >
+            <motion.button 
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              whileHover={{ 
+                y: -4, 
+                backgroundColor: '#30363D',
+                borderColor: '#2F81F7' // Subtle blue border on hover
+              }}
+              whileTap={{ scale: 0.98 }}
+              style={{ 
+                backgroundColor: '#1F2937', 
+                color: '#E6EDF3', 
+                border: '1px solid #30363D' 
+              }}
+              className="px-10 py-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-2xl shadow-black/50"
+            >
+              Get Started →
+            </motion.button>
+          </motion.div>
+        )}
+      </div>
     </section>
-  );
-};
-
-export default Hero;
+  )
+}
