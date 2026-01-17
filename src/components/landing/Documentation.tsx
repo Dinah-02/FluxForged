@@ -33,72 +33,42 @@ const resources = [
 
 const Documentation = () => {
   return (
-    <section id="docs" className="py-24 bg-secondary/30 relative">
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Documentation & Learning</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+    <section id="docs" style={{ backgroundColor: '#0D1117' }} className="py-24 relative overflow-hidden">
+      <div className="container mx-auto px-12 md:px-24 lg:px-32 relative z-10">
+        
+        {/* Section Header */}
+        <div className="mb-16">
+          <h2 style={{ color: '#E6EDF3' }} className="text-3xl sm:text-4xl font-bold mb-4">
+            Documentation & Learning
+          </h2>
+          <p style={{ color: '#9CA3AF' }} className="text-lg max-w-2xl font-light">
             Learn how it all works. We believe in transparency and education.
           </p>
         </div>
 
+        {/* Resource Cards - Strictly Static with Hover Outlines */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {resources.map((resource) => (
             <a
               key={resource.title}
               href={resource.link}
-              className="card-glass p-6 group hover:border-primary/50 transition-all duration-300 block"
+              style={{ backgroundColor: '#1F2937' }}
+              className="p-7 rounded-2xl border border-[#30363D] transition-all duration-300 block group hover:border-[#2F81F7]/60 hover:shadow-[0_0_30px_rgba(47,129,247,0.05)]"
             >
-              <div className="feature-icon mb-4 group-hover:bg-primary/20 transition-colors">
+              <div 
+                style={{ backgroundColor: '#161B22', borderColor: '#30363D' }}
+                className="w-12 h-12 flex items-center justify-center rounded-xl border mb-6 text-[#2F81F7] transition-all duration-300 group-hover:border-[#2F81F7]/50 group-hover:shadow-[0_0_15px_rgba(47,129,247,0.2)]"
+              >
                 <resource.icon className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">{resource.title}</h3>
-              <p className="text-muted-foreground text-sm mb-4">{resource.description}</p>
-              <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+              <h3 style={{ color: '#E6EDF3' }} className="text-lg font-semibold mb-2">{resource.title}</h3>
+              <p style={{ color: '#9CA3AF' }} className="text-sm mb-6 leading-relaxed font-light">{resource.description}</p>
+              <span className="text-[#2F81F7] text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                 {resource.linkText}
                 <ExternalLink className="w-3 h-3" />
               </span>
             </a>
           ))}
-        </div>
-
-        {/* Code sample */}
-        <div className="mt-16 max-w-3xl mx-auto">
-          <div className="terminal-window">
-            <div className="terminal-header">
-              <div className="terminal-dot bg-destructive" />
-              <div className="terminal-dot bg-warning" />
-              <div className="terminal-dot bg-success" />
-              <span className="ml-4 text-xs text-muted-foreground font-mono">pipeline.yaml</span>
-            </div>
-            <pre className="terminal-body text-sm overflow-x-auto">
-              <code className="text-muted-foreground">
-{`# Example Pipeline Configuration
-apiVersion: cloudpipe.io/v1
-kind: Pipeline
-metadata:
-  name: build-and-deploy
-
-stages:
-  - name: test
-    image: node:18-alpine
-    commands:
-      - npm install
-      - npm test
-
-  - name: build
-    image: docker:latest
-    commands:
-      - docker build -t $IMAGE_TAG .
-      - docker push $IMAGE_TAG
-
-  - name: deploy
-    image: kubectl:latest
-    commands:
-      - kubectl apply -f k8s/`}
-              </code>
-            </pre>
-          </div>
         </div>
       </div>
     </section>
