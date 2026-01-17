@@ -1,11 +1,7 @@
-"use client"
-
-import React, { useState, useEffect } from 'react';
-import { motion } from "framer-motion";
-import { 
-  Terminal, 
-  Shield, 
-  Activity, 
+import {
+  Terminal,
+  Shield,
+  Activity,
   CreditCard,
   Code,
   Container,
@@ -58,53 +54,51 @@ const featureCategories = [
 
 const CoreFeatures = () => {
   return (
-    <section id="features" className="py-24 relative bg-[#0D1117]">
-      <div className="container mx-auto px-12 md:px-24 lg:px-32 relative z-10">
+    <section id="features" style={{ backgroundColor: '#0D1117' }} className="py-24 relative">
+      <div className="section-container px-6 md:px-24">
         
-        {/* Section Header - Left Aligned */}
-        <div className="mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-[#E6EDF3]">
-            Core Features
-          </h2>
-          <p className="text-[#9CA3AF] text-lg max-w-2xl font-light">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 style={{ color: '#E6EDF3' }} className="text-3xl sm:text-4xl font-bold mb-4">Core Features</h2>
+          <p style={{ color: '#9CA3AF' }} className="text-lg max-w-2xl mx-auto font-light">
             Everything you need to build, test, and deploy with confidence.
           </p>
         </div>
 
-        {/* Features Grid */}
+        {/* Grid with Hover Outline Logic */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {featureCategories.map((category) => (
             <div 
-              key={category.title}
+              key={category.title} 
               style={{ backgroundColor: '#1F2937', borderColor: '#30363D' }}
-              className="p-8 rounded-2xl border transition-all duration-300 hover:border-[#2F81F7]/50 group"
+              className="border p-8 rounded-2xl group transition-colors duration-300 hover:border-[#2F81F7]/50"
             >
               {/* Category Header */}
-              <div className="flex items-start gap-5 mb-8">
+              <div className="flex items-start gap-4 mb-6">
                 <div 
-                  style={{ backgroundColor: '#161B22', borderColor: '#30363D' }}
-                  className="p-3 rounded-xl border text-[#2F81F7] group-hover:scale-110 transition-transform duration-300"
+                  style={{ backgroundColor: '#161B22' }}
+                  className="p-3 rounded-lg text-[#2F81F7] group-hover:bg-[#2F81F7]/10 transition-colors"
                 >
-                  <category.icon className="w-6 h-6" />
+                  <category.icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-1 text-[#E6EDF3]">{category.title}</h3>
-                  <p className="text-[#9CA3AF] text-sm">{category.description}</p>
+                  <h3 style={{ color: '#E6EDF3' }} className="text-xl font-semibold mb-1">{category.title}</h3>
+                  <p style={{ color: '#9CA3AF' }} className="text-sm">{category.description}</p>
                 </div>
               </div>
 
-              {/* Nested Feature Cards */}
+              {/* Inner Cards with Matching Borders */}
               <div className="space-y-4">
                 {category.features.map((feature) => (
                   <div 
                     key={feature.name} 
                     style={{ backgroundColor: '#0D1117', borderColor: '#30363D' }}
-                    className="flex items-start gap-4 p-5 rounded-xl border transition-colors hover:border-[#2F81F7]/30"
+                    className="flex items-start gap-3 p-3 rounded-lg border transition-colors group-hover:border-[#2F81F7]/20"
                   >
-                    <feature.icon className="w-5 h-5 text-[#2F81F7] mt-1" />
+                    <feature.icon className="w-5 h-5 text-[#2F81F7] mt-0.5" />
                     <div>
-                      <div className="font-medium text-sm text-[#E6EDF3]">{feature.name}</div>
-                      <div className="text-[#6B7280] text-xs mt-1">{feature.desc}</div>
+                      <div style={{ color: '#E6EDF3' }} className="font-medium text-sm">{feature.name}</div>
+                      <div style={{ color: '#6B7280' }} className="text-xs">{feature.desc}</div>
                     </div>
                   </div>
                 ))}
