@@ -65,19 +65,19 @@ const CoreFeatures = () => {
           </p>
         </div>
 
-        {/* Grid with Hover Outline Logic */}
+        {/* Grid with Forced Hover Outline Logic */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {featureCategories.map((category) => (
             <div 
               key={category.title} 
-              style={{ backgroundColor: '#1F2937', borderColor: '#30363D' }}
-              className="border p-8 rounded-2xl group transition-colors duration-300 hover:border-[#2F81F7]/50"
+              style={{ backgroundColor: '#1F2937' }}
+              className="group relative p-8 rounded-2xl border border-[#30363D] transition-all duration-300 hover:border-[#2F81F7]/60 hover:shadow-[0_0_30px_rgba(47,129,247,0.05)]"
             >
               {/* Category Header */}
-              <div className="flex items-start gap-4 mb-6">
+              <div className="flex items-start gap-4 mb-6 relative z-10">
                 <div 
-                  style={{ backgroundColor: '#161B22' }}
-                  className="p-3 rounded-lg text-[#2F81F7] group-hover:bg-[#2F81F7]/10 transition-colors"
+                  style={{ backgroundColor: '#161B22', borderColor: '#30363D' }}
+                  className="p-3 rounded-lg border text-[#2F81F7] transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(47,129,247,0.2)] group-hover:border-[#2F81F7]/50"
                 >
                   <category.icon className="w-5 h-5" />
                 </div>
@@ -87,13 +87,13 @@ const CoreFeatures = () => {
                 </div>
               </div>
 
-              {/* Inner Cards with Matching Borders */}
-              <div className="space-y-4">
+              {/* Inner Cards with Synced Hover Borders */}
+              <div className="space-y-4 relative z-10">
                 {category.features.map((feature) => (
                   <div 
                     key={feature.name} 
                     style={{ backgroundColor: '#0D1117', borderColor: '#30363D' }}
-                    className="flex items-start gap-3 p-3 rounded-lg border transition-colors group-hover:border-[#2F81F7]/20"
+                    className="flex items-start gap-3 p-3 rounded-lg border transition-all duration-300 group-hover:border-[#2F81F7]/20"
                   >
                     <feature.icon className="w-5 h-5 text-[#2F81F7] mt-0.5" />
                     <div>
